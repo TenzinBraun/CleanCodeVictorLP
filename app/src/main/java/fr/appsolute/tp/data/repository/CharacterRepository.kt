@@ -9,10 +9,25 @@ import fr.appsolute.tp.data.networking.api.CharacterApi
 import fr.appsolute.tp.data.networking.createApi
 import fr.appsolute.tp.data.networking.datasource.CharacterDataSource
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private class CharacterRepositoryImpl(
     private val api: CharacterApi
 ) : CharacterRepository {
+    override suspend fun getCharacterDetails(id: Int): Character? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = api.getCharacterDetails(id)
+                check(response.isSuccessful) { "Response is not a success : code = ${response.code()}" }
+                response.body() ?: throw IllegalStateException("Body is null")
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        }
+    }
+
     /**
      * Config for pagination
      */
@@ -41,6 +56,8 @@ interface CharacterRepository {
      * Return a LiveData (Observable Design Pattern) of a Paged List of Character
      */
     fun getPaginatedList(scope: CoroutineScope): LiveData<PagedList<Character>>
+
+    suspend fun getCharacterDetails(id: Int): Character?
 
     companion object {
         /**

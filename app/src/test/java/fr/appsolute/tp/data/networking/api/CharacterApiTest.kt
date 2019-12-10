@@ -9,12 +9,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.lang.IllegalArgumentException
 
 
 class CharacterApiTest {
 
     private lateinit var instance: HttpClientManager
     private lateinit var api: CharacterApi
+    private lateinit var rick:Character
 
 
     @Before
@@ -101,6 +103,18 @@ class CharacterApiTest {
             println("${this.body()?.results?.count()}")
         }
 
+        rick = firstCharacter
+
         return@runBlocking
+    }
+
+    @Test
+    fun getCharacterDetailsTest() = runBlocking {
+        api.getCharacterDetails(1).run {
+            assertTrue("Request must be a success", this.isSuccessful)
+            val data  = this.body() ?: throw IllegalArgumentException("Body is null")
+
+            assertEquals("Character must be Rick", rick, data)
+        }
     }
 }

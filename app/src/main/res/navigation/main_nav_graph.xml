@@ -3,11 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/character_list_fragment">
+    app:startDestination="@+id/character_list_fragment">
 
     <fragment
         android:id="@+id/character_list_fragment"
         android:name="fr.appsolute.tp.ui.fragment.CharacterListFragment"
         android:label="fragment_character_list"
-        tools:layout="@layout/fragment_character_list" />
+        tools:layout="@layout/fragment_character_list" >
+        <action
+            android:id="@+id/action_character_list_fragment_to_placeholder"
+            app:destination="@+id/fragment_single_character" />
+        <action
+            android:id="@+id/action_character_list_fragment_to_singleCharacterFragment"
+            app:destination="@+id/singleCharacterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleCharacterFragment"
+        android:name="fr.appsolute.tp.ui.fragment.SingleCharacterFragment"
+        android:label="SingleCharacterFragment" />
 </navigation>
