@@ -12,7 +12,6 @@ import retrofit2.http.Query
 interface EpisodeApi {
     @GET(GET_ALL_EPISODE_PATH)
     suspend fun getEpisodes(
-        @Query("page") page: Int
     ): Response<PaginatedResult<Episode>>
     @GET(GET_SOME_EPISODE_PATH)
     suspend fun getEpisodesList(

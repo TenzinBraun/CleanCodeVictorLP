@@ -12,16 +12,7 @@ abstract class RickAndMortyDatabase: RoomDatabase() {
 }
 
 
-private class DatabaseManagerImpl(applicationContext: RickAndMortyApplication) : DatabaseManager {
-    override val database: RickAndMortyDatabase =
-        Room.databaseBuilder(
-            applicationContext,
-            RickAndMortyDatabase::class.java,
-            applicationContext.packageName.toString()
-        ).build().also {
-            it.clearAllTables()
-        }
-
+private class DatabaseManagerImpl(override val database: RickAndMortyDatabase) : DatabaseManager {
 
 }
 
@@ -29,12 +20,30 @@ interface DatabaseManager {
     val database: RickAndMortyDatabase
 
     companion object {
-        fun newInstance(applicationContext: RickAndMortyApplication): DatabaseManager = DatabaseManagerImpl(applicationContext)
+        private const val DATABASE_NAME = "rick_and_morty.db"
+
+        @Volatile
+        private var databaseManager: DatabaseManager? = null
+        fun getInstance(app: RickAndMortyApplication? = null): DatabaseManager {
+            return databaseManager ?: synchronized(this){
+                DatabaseManagerImpl(
+                    Room.databaseBuilder(app ?: throw IllegalStateException("No application"),   RickAndMortyDatabase::class.java,
+                        DATABASE_NAME
+                    ).build()
+                ).also {
+                    databaseManager = it
+                }}
+        }
     }
 }
 
+
 @Dao
 interface EpisodeDao {
-    @Query("SELECT * FROM épsiode")
+    @Query("SELECT * FROM episode")
     fun selecAll() : List<Episode>
+    @Insert
+    fun insertAll(entities: List<Episode>)
+
 }
+
