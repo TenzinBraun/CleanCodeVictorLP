@@ -8,7 +8,7 @@ import fr.appsolute.tp.data.model.Episode
 
 
 abstract class RickAndMortyDatabase: RoomDatabase() {
-
+    abstract val episodeDao: EpisodeDao
 }
 
 
