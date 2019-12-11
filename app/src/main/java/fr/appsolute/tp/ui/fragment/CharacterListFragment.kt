@@ -40,7 +40,6 @@ class CharacterListFragment : Fragment(), OnCharacterClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // We need to inject the OnCharacterClickListener in the constructor of the adapter
         characterAdapter = CharacterAdapter(this)
         view.character_list_recycler_view.apply {
             adapter = characterAdapter
@@ -50,9 +49,8 @@ class CharacterListFragment : Fragment(), OnCharacterClickListener {
         }
     }
 
-    // Implementation of OnCharacterClickListener
     override fun invoke(view: View, character: Character) {
-        findNavController().navigate(R.id.action_character_list_fragment_to_singleCharacterFragment,
-            bundleOf(ARGS_KEY to character.id))
+//        findNavController().navigate(R.id.action_character_list_fragment_to_singleCharacterFragment,
+//            bundleOf(ARGS_KEY to character.id))
     }
 }
