@@ -109,7 +109,7 @@ class EpisodeViewHolder private constructor(itemView: View) : RecyclerView.ViewH
          */
         fun create(parent: ViewGroup): EpisodeViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(
-                R.layout.holder_character,
+                R.layout.holder_episode,
                 parent,
                 false
             )
