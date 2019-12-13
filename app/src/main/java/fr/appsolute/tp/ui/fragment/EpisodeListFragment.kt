@@ -47,7 +47,7 @@ class EpisodeListFragment : Fragment(), OnEpisodeClickListener {
         view.episodeRecyclerView.apply {
             adapter = episodeAdapter
         }
-        episodeViewModel.getCharacterDetails {
+        episodeViewModel.getEpisodes {
             episodeAdapter.submitList(it)
         }
     }

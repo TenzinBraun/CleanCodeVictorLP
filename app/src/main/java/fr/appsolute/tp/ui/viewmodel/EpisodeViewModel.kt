@@ -18,10 +18,11 @@ class EpisodeViewModel(private val episodeRepository: EpisodeRepository) : ViewM
     }
 
 
-    fun getCharacterDetails(onSuccess: OnSuccess<List<Episode>>) {
+    fun getEpisodes(onSuccess: OnSuccess<List<Episode>>) {
         viewModelScope.launch {
             episodeRepository.getEpisodes()?.run(onSuccess)
         }
     }
 
 }
+
